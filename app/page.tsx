@@ -66,15 +66,18 @@ export default function Home() {
     let fullResponseText = '';
 
     try {
-      // 3. Directly call the FastAPI backend for the stream (using the absolute path)
-      // The Next.js API route proxy is no longer needed/used.
-      const res = await fetch('/api/chat', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          newMessage: messageToSend, // Only send the new message
+      // 3. Auto-detect API URL based on environment
+      const apiUrl = process.env.NODE_ENV === 'production'
+          ? process.env.NEXT_PUBLIC_API_URL || '/api/chat'  // Use deployed backend URL or proxy
+          : 'http://localhost:8000/api/chat';  // Local FastAPI backend
+        
+        const res = await fetch(apiUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+          newMessage: messageToSend,
         }),
       });
 
