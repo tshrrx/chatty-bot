@@ -68,7 +68,7 @@ export default function Home() {
     try {
       // 3. Auto-detect API URL based on environment
       const apiUrl = process.env.NODE_ENV === 'production'
-          ? process.env.NEXT_PUBLIC_API_URL || '/api/chat'  // Use deployed backend URL or proxy
+          ? process.env.NEXT_PUBLIC_API_URL || 'https://chatty-bot-55z4.onrender.com/'  // Use deployed backend URL or proxy
           : 'http://localhost:8000/api/chat';  // Local FastAPI backend
         
         const res = await fetch(apiUrl, {
