@@ -1,5 +1,10 @@
 {
+  "version": 2,
   "builds": [
+    {
+      "src": "app/**/*",
+      "use": "@vercel/next"
+    },
     {
       "src": "api/index.py",
       "use": "@vercel/python"
@@ -7,8 +12,12 @@
   ],
   "routes": [
     {
-      "src": "/api/chat",
+      "src": "/api/(.*)",
       "dest": "api/index.py"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/app/$1"
     }
   ]
 }

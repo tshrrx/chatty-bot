@@ -1,4 +1,5 @@
 fastapi
 uvicorn
-google-generativeai
 python-dotenv
+google-generativeai
+starlette
