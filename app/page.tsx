@@ -66,20 +66,22 @@ export default function Home() {
     let fullResponseText = '';
 
     try {
-      // 3. Auto-detect API URL based on environment
-      const apiUrl = process.env.NODE_ENV === 'production'
-          ? process.env.NEXT_PUBLIC_API_URL || 'https://chatty-bot-55z4.onrender.com/'  // Use deployed backend URL or proxy
-          : 'http://localhost:8000/api/chat';  // Local FastAPI backend
-        
-        const res = await fetch(apiUrl, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-          newMessage: messageToSend,
-        }),
-      });
+  // 🌍 Detect environment and choose API endpoint
+  const apiUrl =
+    process.env.NODE_ENV === 'production'
+      ? process.env.NEXT_PUBLIC_API_URL || 'https://chatty-bot-55z4.onrender.com/api/chat'
+      : 'http://localhost:8000/api/chat';
+
+  const res = await fetch(apiUrl, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      newMessage: messageToSend,
+    }),
+  });
+
 
       if (!res.ok || !res.body) {
         throw new Error('Failed to fetch streaming response from FastAPI');
